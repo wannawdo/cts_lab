@@ -20,7 +20,6 @@ public class Main {
 			try {
 				c.transfer(200, dest);
 			} catch (IllegalTransferException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} catch (InsufficientFundsException e) {
@@ -29,6 +28,13 @@ public class Main {
 		System.out.println("Suma disponibila este de "+c.getBalance()+" RON.");
 		System.out.println("Suma in contul 1 este de "+dest.getBalance()+" RON");
 		
+		SavingsAccount account3=new SavingsAccount(300, "IBAN3");
+		System.out.println("Suma in contul 3 este de "+account3.getBalance()+" RON");
+		account3.addInterest(10);
+		System.out.println("Suma in contul 3 este de "+account3.getBalance()+" RON");
+		
+		Bank banca=new Bank();
+		BankAccount account4=banca.openBankAccount(AccountType.CURRENT);
 		
 	}
 
