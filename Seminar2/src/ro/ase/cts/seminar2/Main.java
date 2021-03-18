@@ -6,36 +6,41 @@ import ro.ase.cts.seminar2.exceptii.InsufficientFundsException;
 public class Main {
 
 	public static void main(String[] args) {
-		CurrentAccount c=new CurrentAccount(100, "IBAN");
-		CurrentAccount dest=new CurrentAccount(200, "IBAN2");
-		System.out.println("Suma disponibila este de " + c.getBalance() + " RON.");
-				
-		System.out.println("Creditul maxim pentru contul curest este de "+CurrentAccount.MAX_CREDIT+" RON.");
-		
-		c.deposit(208);
-		System.out.println("Suma disponibila este de "+c.getBalance()+" RON.");
-		
+
+		CurrentAccount c = new CurrentAccount(300, "IBAN1");
+		c.setNotificationService(new SMSNotificationService());
+
+		CurrentAccount account2 = new CurrentAccount(200, "IBAN2");
+
+		SavingsAccount account3 = new SavingsAccount(300, "IBAN3");
+
+		System.out.println("suma disponibila este: " + c.getBalance());
+		System.out.println("Creditul maxim pentru cont curent este " + CurrentAccount.MAX_CREDIT);
+		c.deposit(200);
+		System.out.println("suma disponibila este: " + c.getBalance());
+
 		try {
-			c.withdraw(208);
-			try {
-				c.transfer(200, dest);
-			} catch (IllegalTransferException e) {
-				e.printStackTrace();
-			}
-		} catch (InsufficientFundsException e) {
-			System.out.println(e.getMessage());
+			c.withdraw(200);
+			c.setNotificationService(new EmailNotificationService() {
+				@Override
+				public void sendNotification(String message) {
+					System.out.println("Sent PUSH notification with message: " + message);
+				}
+			});
+			c.withdraw(200);
+			c.transfer(100, c);
+		} catch (InsufficientFundsException | IllegalTransferException e) {
+			System.err.println(e.getMessage());
 		}
-		System.out.println("Suma disponibila este de "+c.getBalance()+" RON.");
-		System.out.println("Suma in contul 1 este de "+dest.getBalance()+" RON");
-		
-		SavingsAccount account3=new SavingsAccount(300, "IBAN3");
-		System.out.println("Suma in contul 3 este de "+account3.getBalance()+" RON");
+		System.out.println("suma disponibila este: " + c.getBalance());
+		System.out.println("suma in contul2 este: " + account2.getBalance());
+
 		account3.addInterest(10);
-		System.out.println("Suma in contul 3 este de "+account3.getBalance()+" RON");
-		
-		Bank banca=new Bank();
-		BankAccount account4=banca.openBankAccount(AccountType.CURRENT);
-		
+		System.out.println("suma in contul3 este: " + account3.getBalance());
+
+		Bank banca = new Bank();
+		BankAccount account4 = banca.openBankAccount(AccountType.CURRENT);
+
 	}
 
 }
