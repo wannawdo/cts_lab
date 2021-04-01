@@ -7,14 +7,14 @@ public class TechProduct implements Product {
 	String model;
 	String displayType;
 	float price;
-	
+
 	private TechProduct() {
 
 	}
 
-	public TechProduct(String productName) {
+	private TechProduct(int id) {
 		super();
-		this.productName = productName;
+		this.id = id;
 	}
 
 	@Override
@@ -22,4 +22,64 @@ public class TechProduct implements Product {
 		return "this is a tech product";
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public String getDisplayType() {
+		return displayType;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public static class TechProductBuilder {
+		private TechProduct product;
+
+		public TechProductBuilder(int id) {
+			product = new TechProduct();
+		}
+
+		public TechProductBuilder setName(String name) {
+			product.productName = name;
+			return this;
+		}
+
+		public TechProductBuilder setManufacturer(String manufacturer) {
+			product.manufacturer = manufacturer;
+			return this;
+		}
+
+		public TechProductBuilder setModel(String model) {
+			product.model = model;
+			return this;
+		}
+
+		public TechProductBuilder setDisplayType(String displayType) {
+			product.displayType = displayType;
+			return this;
+		}
+
+		public TechProductBuilder setPrice(float price) {
+			product.price = price;
+			return this;
+		}
+		
+		public TechProduct getProduct() {
+			return product;
+		}
+	}
 }
