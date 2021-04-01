@@ -1,24 +1,19 @@
-package ro.ase.cts.seminar5.main;
+package ro.ase.acs.seminar6.main;
 
 import java.util.Scanner;
 
-import ro.ase.cts.seminar5.factory.AbstractProductFactory;
-import ro.ase.cts.seminar5.factory.OfficeProduct;
-import ro.ase.cts.seminar5.factory.Product;
-import ro.ase.cts.seminar5.factory.ProductFactory;
-import ro.ase.cts.seminar5.factory.TechProduct;
-import ro.ase.cts.seminar5.factory.TechProductFactory;
-import ro.ase.cts.seminar5.singleton.Cart;
+import ro.ase.acs.seminar6.builder.AbstractProductFactory;
+import ro.ase.acs.seminar6.builder.OfficeProduct;
+import ro.ase.acs.seminar6.builder.Product;
+import ro.ase.acs.seminar6.builder.ProductFactory;
+import ro.ase.acs.seminar6.builder.TechProduct;
+import ro.ase.acs.seminar6.builder.TechProductFactory;
+import ro.ase.acs.seminar6.singleton.Cart;
 
 public class Main {
 
 	public static void main(String[] args) {
 		Cart myShoppingCart = Cart.getInstance("shopping");
-
-//		TechProduct smartphone = new TechProduct();
-//		myShoppingCart.products.add(smartphone);
-//		Product paperClip = new OfficeProduct();
-//		myShoppingCart.products.add(paperClip);
 
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Selectati categoria de produse: \n tech - Produse tech \n office - Produse office");
