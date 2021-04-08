@@ -12,7 +12,7 @@ public class TechProductFactory extends AbstractProductFactory {
 
 	@Override
 	public Product makeProduct(int id) throws UnsupportedOperationException {
-		ArrayList<String> records = readRecordsFromFile("tech_products.csv");
+		ArrayList<String> records = readRecordsFromFile("D:\\Facultate\\Anul%203%20semestrul%202\\Oana\\CTS\\cts_lab\\Seminar6\\bin\\ro\\ase\\acs\\seminar6\\builder\\tech_products.csv");
 		for (String record : records) {
 			String[] productAttributes = record.split(",");
 			if (Integer.valueOf(productAttributes[0]) == id) {
@@ -28,7 +28,7 @@ public class TechProductFactory extends AbstractProductFactory {
 
 	@Override
 	public String getCatalog() {
-		ArrayList<String> records = readRecordsFromFile("tech_products.csv");
+		ArrayList<String> records = readRecordsFromFile("D:\\Facultate\\Anul%203%20semestrul%202\\Oana\\CTS\\cts_lab\\Seminar6\\bin\\ro\\ase\\acs\\seminar6\\builder\\tech_products.csv");
 		StringBuilder builder = new StringBuilder();
 		for (String record : records) {
 			String[] productAttributes = record.split(",");
@@ -41,6 +41,13 @@ public class TechProductFactory extends AbstractProductFactory {
 
 	private ArrayList<String> readRecordsFromFile(String fileName) {
 		ArrayList<String> records = new ArrayList<String>();
+		System.out.println("Reading product records...");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		URL fileUrl = getClass().getResource(fileName);
 		File productsFile = new File(fileUrl.getPath());
 		try {

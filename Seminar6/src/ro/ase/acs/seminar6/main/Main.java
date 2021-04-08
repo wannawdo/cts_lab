@@ -15,45 +15,58 @@ public class Main {
 	public static void main(String[] args) {
 
 		Cart myShoppingCart = Cart.getInstance("shopping");
-//			Product smartphone=new TechProduct();
-//			Product paperClip=new OfficeProduct();
-//			myShoppingCart.products.add(smartphone);
-//			myShoppingCart.products.add(paperClip);
+
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Selectati categoria de produse:\n tech - Produse tech \n office - Produse office");
-		String userPreference = scan.nextLine();
+		System.out.println("Selectati categoria de produse:\n Produse tech \n Produse office");
+		String userPreferences = scan.nextLine();
 		Product myProduct = null;
-//			if(userPreference.equalsIgnoreCase("tech")) {
-//				myProduct=new TechProduct();
-//			}else if(userPreference.equalsIgnoreCase("office")) {
-//				myProduct=new OfficeProduct();
-//			}else {
-//				System.out.println("Optiune invalida");
-//				System.out.println("Catalog produse:\n tech - Produse tech \n office - Produse office");
-//				
-//			}
+
 		AbstractProductFactory productFactory = null;
-		// ProductFactory productFactory=new ProductFactory();
-		if (userPreference != null) {
-			if (userPreference.equalsIgnoreCase("tech")) {
+		if (userPreferences != null) {
+			if (userPreferences.equalsIgnoreCase("tech")) {
 				productFactory = new TechProductFactory();
 			}
 		}
+
 		System.out.println(productFactory.getCatalog());
-		userPreference = scan.nextLine();
-		try {
-			int selectedId = Integer.valueOf(userPreference);
-			myProduct = productFactory.makeProduct(selectedId);
-		} catch (NumberFormatException e) {
-			System.err.println("Selectie invalida");
+		userPreferences = scan.nextLine();
+
+		for (int i = 0; i < 2; i++) {
+			userPreferences = scan.nextLine();
+			try {
+				int selectedId = Integer.valueOf(userPreferences);
+				if (myShoppingCart.products.isEmpty()) {
+					myProduct = productFactory.makeProduct(selectedId);
+				}
+
+				for (Product p : myShoppingCart.products) {
+					if (p instanceof TechProduct) {
+						TechProduct tempProduct = (TechProduct) p;
+
+						if (tempProduct.getId() == selectedId) {
+							try {
+								myProduct = (Product) tempProduct.clone();
+							} catch (CloneNotSupportedException e) {
+								e.printStackTrace();
+							}
+						} else {
+							myProduct = productFactory.makeProduct(selectedId);
+						}
+					}
+				}
+				myProduct = productFactory.makeProduct(selectedId);
+			} catch (NumberFormatException e) {
+				System.err.println("Selectie invalida");
+
+			}
+
+			if (myProduct != null) {
+				myShoppingCart.products.add(myProduct);
+			}
 		}
 
-		if (myProduct != null) {
-			myShoppingCart.products.add(myProduct);
-		}
 		for (Product p : myShoppingCart.products) {
 			System.out.println(p.getDescription());
 		}
-
 	}
 }
