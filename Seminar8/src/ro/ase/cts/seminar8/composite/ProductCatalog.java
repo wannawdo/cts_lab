@@ -25,19 +25,27 @@ public class ProductCatalog extends CatalogComponent {
 				products.remove(i);
 			}
 		}
-
 	}
 
 	@Override
 	public String getName() {
-		
+
 		return this.name;
 	}
 
 	@Override
 	public double getPrice() {
-		
-		return this.getPrice();
+		throw new UnsupportedOperationException("Cannot get price");
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.name).append("\n");
+		for (CatalogComponent comp : this.products) {
+			builder.append(comp.toString());
+		}
+		return builder.toString();
 	}
 
 }
