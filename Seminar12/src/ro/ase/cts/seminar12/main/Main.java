@@ -1,5 +1,6 @@
 package ro.ase.cts.seminar12.main;
 
+
 import java.util.ArrayList;
 
 import ro.ase.cts.seminar12.memento.CharacterMemento;
@@ -9,6 +10,8 @@ import ro.ase.cts.seminar12.observer.CreditAccount;
 import ro.ase.cts.seminar12.observer.InsufficientFundsException;
 import ro.ase.cts.seminar12.observer.NotificationInterface;
 import ro.ase.cts.seminar12.observer.SMSNotification;
+import ro.ase.cts.seminar12.template.HexFormatter;
+import ro.ase.cts.seminar12.template.DecimalFormatter;
 
 public class Main {
 
@@ -43,5 +46,11 @@ public class Main {
 		myCharacter.setMemento(saveList.get(0));
 		System.out.println("My character hitpoints: "+ myCharacter.getHitpoints());
 
+		
+		System.out.println("-------------TEMPLATE------------");
+		DecimalFormatter decimalFormatter=new DecimalFormatter();
+		decimalFormatter.displayOutput(10);
+		HexFormatter hexFormatter=new HexFormatter();
+		hexFormatter.displayOutput(10);
 	}
 }
