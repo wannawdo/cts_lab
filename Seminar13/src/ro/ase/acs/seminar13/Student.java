@@ -3,14 +3,14 @@ package ro.ase.acs.seminar13;
 import ro.ase.acs.seminar13.exceptions.StudentExceptionWrongValue;
 
 public class Student {
-	/* contsraints
-	 * nume - [3-255] caractere
-	 * varsta - [18-30]
-	 * note - [1, 10]
+	/*
+	 * contsraints nume - [3-255] caractere varsta - [18-30] note - [1, 10]
 	 */
 	String nume;
 	int varsta;
 	int note[];
+	private static final int NOTA_MAX = 10;
+	private static final int NOTA_MIN = 10;
 
 	public Student(String nume, int varsta, int[] note) {
 		super();
@@ -32,8 +32,9 @@ public class Student {
 	}
 
 	public void setVarsta(int varsta) throws StudentExceptionWrongValue {
-		if(varsta<0)
-		{throw new StudentExceptionWrongValue("Values can't be below 0");}
+		if (varsta < 0) {
+			throw new StudentExceptionWrongValue("Values can't be below 0");
+		}
 		this.varsta = varsta;
 	}
 
@@ -41,8 +42,26 @@ public class Student {
 		return note;
 	}
 
-	public void setNote(int[] note) {
-		this.note = note;
+	public void setNote(int[] note) throws StudentExceptionWrongValue {
+		if (note != null) {
+			for (int i = 0; i < note.length; i++) {
+				if (note[i] > NOTA_MAX || note[i] < NOTA_MIN) {
+					throw new StudentExceptionWrongValue("Invalid input for nota -" + note[i]);
+				}
+			}
+			this.note = note;
+		}
 	}
 
+	public float calculMedie() throws StudentExceptionWrongValue {
+		if (note == null) {
+			throw new StudentExceptionWrongValue("empty dataset - note");
+		}
+		float suma = 0;
+		for (int i = 0; i < note.length; i++) {
+			suma = suma + note[i];
+		}
+		float medie = suma / (float) note.length;
+		return (int) (medie * 100) / 100.0f;
+	}
 }

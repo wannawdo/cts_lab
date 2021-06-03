@@ -7,19 +7,24 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import ro.ase.acs.seminar13.Student;
 import ro.ase.acs.seminar13.exceptions.StudentExceptionWrongValue;
 
 class StudentTestCase {
 	Student student;
-	String deFaultName = "N/A";
-	int defaultVarta = 18;
-	int defaultNote[] = {};
+	static String DEFAULT_NAME = "N/A";
+	static int DEFAULT_VARSTA = 18;
+	static int DEFAULT_NOTE[] = {};
+	static int NR_NOTE_DEFAULT = 3;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		System.out.println("setUpBeforeClass was called");
+		DEFAULT_NOTE = new int[NR_NOTE_DEFAULT];
+		DEFAULT_NOTE[0] = 9;
+		DEFAULT_NOTE[1] = 10;
+		DEFAULT_NOTE[2] = 9;
 	}
 
 	@AfterAll
@@ -29,7 +34,7 @@ class StudentTestCase {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		student = new Student(deFaultName, defaultVarta, defaultNote);
+		student = new Student(DEFAULT_NAME, DEFAULT_VARSTA, DEFAULT_NOTE);
 	}
 
 	@AfterEach
@@ -66,11 +71,60 @@ class StudentTestCase {
 		assertNotNull(student);
 	}
 
-	@Test(expected = StudentExceptionWrongValue.class)
+//error condition
+	@Test
 	void testStudentSetVarstaErrorCondition() {
+//		assertThrows(StudentExceptionWrongValue.class, () -> {
+//			student.setVarsta(-1);
+//		});
+		assertThrows(StudentExceptionWrongValue.class, new Executable() {
 
-		student.setVarsta(-1);
+			@Override
+			public void execute() throws Throwable {
+				student.setVarsta(-1);
+			}
+		});
 
+	}
+
+	@Test
+	void testStudentGetVarstaRight() {
+		int expectedValue = DEFAULT_VARSTA;
+		int actualValue = student.getVarsta();
+		assertEquals(expectedValue, actualValue);
+	}
+
+	@Test
+	void testCalcululMedieErrorCondition() throws StudentExceptionWrongValue {
+		student.setNote(null);
+		assertThrows(StudentExceptionWrongValue.class, () -> {
+			student.calculMedie();
+		});
+	}
+
+	@Test
+	void testCalculMedieErrorCondition() {
+		try {
+			student.setNote(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertThrows(StudentExceptionWrongValue.class, () -> {
+			student.calculMedie();
+		});
+	}
+
+	@Test
+	void testSetNoteBoundaryCondition() {
+		int invalidDatasetNote[] = new int[3];
+		for (int i = 0; i < 0; i++) {
+			invalidDatasetNote[i] = 8;
+		}
+		invalidDatasetNote[2] = 20;
+		assertThrows(StudentExceptionWrongValue.class, () -> {
+			student.setNote(invalidDatasetNote);
+		});
 	}
 
 }
