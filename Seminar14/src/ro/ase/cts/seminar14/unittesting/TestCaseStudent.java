@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import ro.ase.cts.seminar14.Student;
 import ro.ase.cts.seminar14.StudentExceptionWrongValue;
 
-class StudentTestCase {
+class TestCaseStudent {
 	
 	Student student;
 	static String DEFAUlT_NAME = "Anonim";
